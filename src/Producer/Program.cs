@@ -4,6 +4,7 @@ using Azure.Messaging.ServiceBus;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace Producer
 {
@@ -44,11 +45,13 @@ namespace Producer
     /// </summary>
     internal class Worker
     {
+        private readonly ILogger<Worker> logger;
+
         // connection string to your Service Bus namespace
-        private readonly string connectionString = "<NAMESPACE CONNECTION STRING>";
+        private readonly string connectionString;
 
         // name of your Service Bus queue
-        private readonly string queueName = "<QUEUE NAME>";
+        private readonly string queueName;
 
         // number of messages to be sent to the queue
         private readonly int numOfMessages;
@@ -59,10 +62,14 @@ namespace Producer
         // the sender used to publish messages to the queue
         static ServiceBusSender sender;
 
+        private static int i;
         
 
-        public Worker(IConfiguration configuration)
+        public Worker(
+            IConfiguration configuration,
+            ILogger<Worker> logger)
         {
+            this.logger = logger;
             connectionString = configuration["ServiceBus:ConnectionString"];
             queueName = configuration["ServiceBus:QueueName"];
             numOfMessages = int.Parse(configuration["ServiceBus:NumberOfMessagesToAdd"]);
@@ -78,24 +85,35 @@ namespace Producer
             client = new ServiceBusClient(connectionString);
             sender = client.CreateSender(queueName);
 
-            // create a batch 
-            using ServiceBusMessageBatch messageBatch = await sender.CreateMessageBatchAsync();
-
-            for (int i = 1; i <= numOfMessages; i++)
-            {
-                // try adding a message to the batch
-                if (!messageBatch.TryAddMessage(new ServiceBusMessage($"{i}")))
-                {
-                    // if it is too large for the batch
-                    throw new Exception($"The message {i} is too large to fit in the batch.");
-                }
-            }
-
             try
             {
-                // Use the producer client to send the batch of messages to the Service Bus queue
-                await sender.SendMessagesAsync(messageBatch);
-                Console.WriteLine($"A batch of {numOfMessages} messages has been published to the queue.");
+
+                i = 1;
+                // create a batch 
+                while (i < numOfMessages)
+                {
+                    using ServiceBusMessageBatch messageBatch = await sender.CreateMessageBatchAsync();
+                    {
+                        for (; i <= numOfMessages; i++)
+                        {
+                            logger.LogInformation("Adding message {Identifier}", i);
+
+                            // try adding a message to the batch
+                            if (!messageBatch.TryAddMessage(new ServiceBusMessage($"{i}")))
+                            {
+                                logger.LogWarning("Batch too large, sending.");
+                            }
+
+                            if (i % 1000 == 0)
+                            {
+                                await SendCreatedBatch(messageBatch);
+                                i++;
+                                break;
+                            }
+
+                        }
+                    }
+                }
             }
             finally
             {
@@ -103,6 +121,20 @@ namespace Producer
                 // resources and other unmanaged objects are properly cleaned up.
                 await sender.DisposeAsync();
                 await client.DisposeAsync();
+            }
+        }
+
+        private async Task SendCreatedBatch(ServiceBusMessageBatch messageBatch)
+        {
+            try
+            {
+                // Use the producer client to send the batch of messages to the Service Bus queue
+                await sender.SendMessagesAsync(messageBatch);
+                logger.LogInformation($"A batch of {messageBatch.Count} messages has been published to the queue.");
+            }
+            catch (ServiceBusException sbe)
+            {
+                logger.LogError(sbe, sbe.Message);
             }
         }
     }
