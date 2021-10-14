@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleProcessorPeekLockOne
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleProcessorPeekLockTwo", "ConsoleProcessorPeekLockTwo\ConsoleProcessorPeekLockTwo.csproj", "{FBAA1115-552B-4084-B6DA-FDD6205A7C29}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcessLogger", "ProcessLogger\ProcessLogger.csproj", "{90F2AA1C-E929-4FB1-8EFD-BEE537A7E100}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,10 @@ Global
 		{FBAA1115-552B-4084-B6DA-FDD6205A7C29}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FBAA1115-552B-4084-B6DA-FDD6205A7C29}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FBAA1115-552B-4084-B6DA-FDD6205A7C29}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90F2AA1C-E929-4FB1-8EFD-BEE537A7E100}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90F2AA1C-E929-4FB1-8EFD-BEE537A7E100}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90F2AA1C-E929-4FB1-8EFD-BEE537A7E100}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90F2AA1C-E929-4FB1-8EFD-BEE537A7E100}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
