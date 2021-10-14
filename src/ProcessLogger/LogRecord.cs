@@ -17,7 +17,7 @@ namespace ProcessLogger
            (@Id
            ,@Processor
            ,@MessageId
-           ,@Created";
+           ,@Created)";
 
         public LogRecord(string connectionString)
         {

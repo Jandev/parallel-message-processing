@@ -38,7 +38,11 @@ namespace ConsoleProcessorPeekLockOne
                 .ConfigureServices(services =>
                 {
                     services.AddSingleton<Worker>();
-                    services.AddTransient<LogRecord>();
+                    services.AddTransient(p =>
+                    {
+                        var config = p.GetService<IConfiguration>();
+                        return new LogRecord(config["Sql:ConnectionString"]);
+                    });
                 });
         }
 
@@ -58,14 +62,17 @@ namespace ConsoleProcessorPeekLockOne
             // the processor that reads and processes messages from the queue
             static ServiceBusProcessor processor;
 
+            private readonly LogRecord logRecord;
             private readonly ILogger<Worker> logger;
 
             public Worker(
+                LogRecord logRecord,
                 IConfiguration configuration,
                 ILogger<Worker> logger)
             {
                 connectionString = configuration["ServiceBus:ConnectionString"];
                 queueName = configuration["ServiceBus:QueueName"];
+                this.logRecord = logRecord;
                 this.logger = logger;
             }
 
@@ -128,6 +135,7 @@ namespace ConsoleProcessorPeekLockOne
             {
                 string body = args.Message.Body.ToString();
                 logger.LogInformation($"{body}");
+                await this.logRecord.Store(new LogRecord.Entity(int.Parse(body), nameof(ConsoleProcessorPeekLockOne)));
 
                 // complete the message. messages is deleted from the queue. 
                 await args.CompleteMessageAsync(args.Message);

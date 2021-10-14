@@ -62,6 +62,7 @@ namespace ConsoleProcessorPeekLockTwo
             // the processor that reads and processes messages from the queue
             static ServiceBusProcessor processor;
 
+            private readonly LogRecord logRecord;
             private readonly ILogger<Worker> logger;
 
             public Worker(
@@ -71,6 +72,7 @@ namespace ConsoleProcessorPeekLockTwo
             {
                 connectionString = configuration["ServiceBus:ConnectionString"];
                 queueName = configuration["ServiceBus:QueueName"];
+                this.logRecord = logRecord;
                 this.logger = logger;
             }
 
@@ -133,6 +135,7 @@ namespace ConsoleProcessorPeekLockTwo
             {
                 string body = args.Message.Body.ToString();
                 logger.LogInformation($"{body}");
+                await this.logRecord.Store(new LogRecord.Entity(int.Parse(body), nameof(ConsoleProcessorPeekLockTwo)));
 
                 // complete the message. messages is deleted from the queue. 
                 await args.CompleteMessageAsync(args.Message);
