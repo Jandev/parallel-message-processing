@@ -5,6 +5,12 @@ VisualStudioVersion = 16.0.31702.278
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Producer", "Producer\Producer.csproj", "{ED808E64-9CF4-4C17-9579-9C5BF35F5D65}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Console-PeekLock", "Console-PeekLock", "{9EF11DB2-94FB-4143-9635-1E397EDC6A45}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleProcessorPeekLockOne", "ConsoleProcessorPeekLockOne\ConsoleProcessorPeekLockOne.csproj", "{2E4ED8A5-8958-441E-A5ED-37FFDC7E2068}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleProcessorPeekLockTwo", "ConsoleProcessorPeekLockTwo\ConsoleProcessorPeekLockTwo.csproj", "{FBAA1115-552B-4084-B6DA-FDD6205A7C29}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,9 +21,21 @@ Global
 		{ED808E64-9CF4-4C17-9579-9C5BF35F5D65}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED808E64-9CF4-4C17-9579-9C5BF35F5D65}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED808E64-9CF4-4C17-9579-9C5BF35F5D65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E4ED8A5-8958-441E-A5ED-37FFDC7E2068}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E4ED8A5-8958-441E-A5ED-37FFDC7E2068}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E4ED8A5-8958-441E-A5ED-37FFDC7E2068}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E4ED8A5-8958-441E-A5ED-37FFDC7E2068}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FBAA1115-552B-4084-B6DA-FDD6205A7C29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBAA1115-552B-4084-B6DA-FDD6205A7C29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBAA1115-552B-4084-B6DA-FDD6205A7C29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBAA1115-552B-4084-B6DA-FDD6205A7C29}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2E4ED8A5-8958-441E-A5ED-37FFDC7E2068} = {9EF11DB2-94FB-4143-9635-1E397EDC6A45}
+		{FBAA1115-552B-4084-B6DA-FDD6205A7C29} = {9EF11DB2-94FB-4143-9635-1E397EDC6A45}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A1BFB8E4-E5C1-495A-939A-39C540627A27}
