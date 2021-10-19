@@ -86,18 +86,25 @@ namespace ConsoleProcessorPeekLockTwo
                 // Create the client object that will be used to create sender and receiver objects
                 client = new ServiceBusClient(connectionString);
 
-                var numberOfParallelEventProcessors = 2;
-                var messagesToRetrieve = numberOfParallelEventProcessors * 5;
+                bool runWithPrefetch = true;
+
+                ServiceBusProcessorOptions options = new();
+                if (runWithPrefetch)
+                {
+                    var numberOfParallelEventProcessors = 2;
+                    var messagesToRetrieve = numberOfParallelEventProcessors * 5;
+                    options = new ServiceBusProcessorOptions
+                    {
+                        AutoCompleteMessages = false,
+                        PrefetchCount = messagesToRetrieve,
+                        MaxConcurrentCalls = numberOfParallelEventProcessors,
+                        ReceiveMode = ServiceBusReceiveMode.PeekLock,
+                        MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(120).Add(TimeSpan.FromSeconds(60))
+                    };
+                }
 
                 // create a processor that we can use to process the messages
-                processor = client.CreateProcessor(queueName, new ServiceBusProcessorOptions
-                {
-                    AutoCompleteMessages = false,
-                    PrefetchCount = messagesToRetrieve,
-                    MaxConcurrentCalls = numberOfParallelEventProcessors,
-                    ReceiveMode = ServiceBusReceiveMode.PeekLock,
-                    MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(120).Add(TimeSpan.FromSeconds(60))
-                });
+                processor = client.CreateProcessor(queueName, options);
 
                 try
                 {

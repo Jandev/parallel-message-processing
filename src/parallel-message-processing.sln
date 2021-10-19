@@ -3,15 +3,20 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31702.278
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Producer", "Producer\Producer.csproj", "{ED808E64-9CF4-4C17-9579-9C5BF35F5D65}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Producer", "Producer\Producer.csproj", "{ED808E64-9CF4-4C17-9579-9C5BF35F5D65}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Console-PeekLock", "Console-PeekLock", "{9EF11DB2-94FB-4143-9635-1E397EDC6A45}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleProcessorPeekLockOne", "ConsoleProcessorPeekLockOne\ConsoleProcessorPeekLockOne.csproj", "{2E4ED8A5-8958-441E-A5ED-37FFDC7E2068}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleProcessorPeekLockOne", "ConsoleProcessorPeekLockOne\ConsoleProcessorPeekLockOne.csproj", "{2E4ED8A5-8958-441E-A5ED-37FFDC7E2068}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleProcessorPeekLockTwo", "ConsoleProcessorPeekLockTwo\ConsoleProcessorPeekLockTwo.csproj", "{FBAA1115-552B-4084-B6DA-FDD6205A7C29}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleProcessorPeekLockTwo", "ConsoleProcessorPeekLockTwo\ConsoleProcessorPeekLockTwo.csproj", "{FBAA1115-552B-4084-B6DA-FDD6205A7C29}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcessLogger", "ProcessLogger\ProcessLogger.csproj", "{90F2AA1C-E929-4FB1-8EFD-BEE537A7E100}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProcessLogger", "ProcessLogger\ProcessLogger.csproj", "{90F2AA1C-E929-4FB1-8EFD-BEE537A7E100}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CC3FB1FE-C3D8-4707-9185-1018B5547A4E}"
+	ProjectSection(SolutionItems) = preProject
+		..\README.md = ..\README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
