@@ -88,7 +88,7 @@ namespace ConsoleProcessorReceiveAndDeleteOne
 
 
 
-                bool runWithPrefetch = true;
+                bool runWithPrefetch = false;
 
                 ServiceBusProcessorOptions options = new()
                 {
@@ -155,18 +155,22 @@ namespace ConsoleProcessorReceiveAndDeleteOne
             // handle received messages
             private async Task MessageHandler(ProcessMessageEventArgs args)
             {
-                string body = args.Message.Body.ToString();
-                logger.LogInformation($"{body}");
-                await this.logRecord.Store(new LogRecord.Entity(int.Parse(body), nameof(ConsoleProcessorReceiveAndDeleteOne)));
-
-                // complete the message. messages is deleted from the queue. 
-                await args.CompleteMessageAsync(args.Message);
+                try
+                {
+                    string body = args.Message.Body.ToString();
+                    logger.LogInformation($"{body}");
+                    await this.logRecord.Store(new LogRecord.Entity(int.Parse(body), nameof(ConsoleProcessorReceiveAndDeleteOne)));
+                }
+                catch (Exception e)
+                {
+                    logger.LogError(e, e.Message);
+                }
             }
 
             // handle any errors when receiving messages
             private Task ErrorHandler(ProcessErrorEventArgs args)
             {
-                logger.LogInformation(args.Exception.ToString());
+                logger.LogError(args.Exception,args.Exception.ToString());
                 return Task.CompletedTask;
             }
         }

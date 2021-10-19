@@ -86,9 +86,12 @@ namespace ConsoleProcessorReceiveAndDeleteTwo
                 // Create the client object that will be used to create sender and receiver objects
                 client = new ServiceBusClient(connectionString);
 
-                bool runWithPrefetch = true;
+                bool runWithPrefetch = false;
 
-                ServiceBusProcessorOptions options = new();
+                ServiceBusProcessorOptions options = new()
+                {
+                    ReceiveMode = ServiceBusReceiveMode.ReceiveAndDelete
+                };
                 if (runWithPrefetch)
                 {
                     var numberOfParallelEventProcessors = 2;
@@ -98,7 +101,7 @@ namespace ConsoleProcessorReceiveAndDeleteTwo
                         AutoCompleteMessages = false,
                         PrefetchCount = messagesToRetrieve,
                         MaxConcurrentCalls = numberOfParallelEventProcessors,
-                        ReceiveMode = ServiceBusReceiveMode.PeekLock,
+                        ReceiveMode = ServiceBusReceiveMode.ReceiveAndDelete,
                         MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(120).Add(TimeSpan.FromSeconds(60))
                     };
                 }
@@ -150,18 +153,22 @@ namespace ConsoleProcessorReceiveAndDeleteTwo
             // handle received messages
             private async Task MessageHandler(ProcessMessageEventArgs args)
             {
-                string body = args.Message.Body.ToString();
-                logger.LogInformation($"{body}");
-                await this.logRecord.Store(new LogRecord.Entity(int.Parse(body), nameof(ConsoleProcessorReceiveAndDeleteTwo)));
-
-                // complete the message. messages is deleted from the queue. 
-                await args.CompleteMessageAsync(args.Message);
+                try
+                {
+                    string body = args.Message.Body.ToString();
+                    logger.LogInformation($"{body}");
+                    await this.logRecord.Store(new LogRecord.Entity(int.Parse(body), nameof(ConsoleProcessorReceiveAndDeleteTwo)));
+                }
+                catch (Exception e)
+                {
+                    logger.LogError(e, e.Message);
+                }
             }
 
             // handle any errors when receiving messages
             private Task ErrorHandler(ProcessErrorEventArgs args)
             {
-                logger.LogInformation(args.Exception.ToString());
+                logger.LogError(args.Exception, args.Exception.ToString());
                 return Task.CompletedTask;
             }
         }
