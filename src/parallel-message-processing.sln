@@ -24,6 +24,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleProcessorReceiveAndD
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleProcessorReceiveAndDeleteTwo", "ConsoleProcessorReceiveAndDeleteTwo\ConsoleProcessorReceiveAndDeleteTwo.csproj", "{C9D5893C-F7B5-484E-B35B-E2864A9AD23A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Function", "Function", "{40F5F727-0F75-49A3-851B-578373DA89E3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunctionProcessor", "FunctionProcessor\FunctionProcessor.csproj", "{80EA78FB-7218-4F75-B4E6-54D005618B65}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -54,6 +58,10 @@ Global
 		{C9D5893C-F7B5-484E-B35B-E2864A9AD23A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C9D5893C-F7B5-484E-B35B-E2864A9AD23A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C9D5893C-F7B5-484E-B35B-E2864A9AD23A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80EA78FB-7218-4F75-B4E6-54D005618B65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80EA78FB-7218-4F75-B4E6-54D005618B65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80EA78FB-7218-4F75-B4E6-54D005618B65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80EA78FB-7218-4F75-B4E6-54D005618B65}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -63,6 +71,7 @@ Global
 		{FBAA1115-552B-4084-B6DA-FDD6205A7C29} = {9EF11DB2-94FB-4143-9635-1E397EDC6A45}
 		{344E4AA3-28B9-4E43-8107-5A11A40C7C2A} = {07FC85C4-0F4E-4A05-A9C9-284A7F73E97B}
 		{C9D5893C-F7B5-484E-B35B-E2864A9AD23A} = {07FC85C4-0F4E-4A05-A9C9-284A7F73E97B}
+		{80EA78FB-7218-4F75-B4E6-54D005618B65} = {40F5F727-0F75-49A3-851B-578373DA89E3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A1BFB8E4-E5C1-495A-939A-39C540627A27}
