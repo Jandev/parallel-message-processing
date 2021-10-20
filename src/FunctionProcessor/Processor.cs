@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Microsoft.Azure.ServiceBus;
 using Microsoft.Azure.ServiceBus.Core;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Host;
@@ -75,15 +76,15 @@ namespace FunctionProcessor
                 Connection = "ServiceBusConnection",
                 AutoComplete = false
             )]
-            MessageReceiver receiver)
+            Message message,
+            MessageReceiver messageReceiver)
         {
             try
             {
-                var message = await receiver.ReceiveAsync();
-                string body = message.Body.ToString();
+                string body = System.Text.Encoding.UTF8.GetString(message.Body, 0, message.Body.Length);
                 logger.LogInformation($"{body}");
                 await this.logRecord.Store(new LogRecord.Entity(int.Parse(body), nameof(BrokeredMessageFunction)));
-                await receiver.CompleteAsync(message.SystemProperties.LockToken);
+                await messageReceiver.CompleteAsync(message.SystemProperties.LockToken);
             }
             catch (Exception e)
             {
@@ -99,20 +100,20 @@ namespace FunctionProcessor
                 Connection = "ServiceBusConnection",
                 AutoComplete = false
             )]
-            MessageReceiver receiver)
+            Message message,
+            MessageReceiver messageReceiver)
         {
             try
             {
-                var message = await receiver.ReceiveAsync();
-                string body = message.Body.ToString();
+                string body = System.Text.Encoding.UTF8.GetString(message.Body, 0, message.Body.Length);
 
                 logger.LogInformation($"{body}");
                 if (new Random().Next(0, 10) % 4 == 0)
                 {
                     throw new Exception("Something happened");
                 }
-                await this.logRecord.Store(new LogRecord.Entity(int.Parse(body), nameof(BrokeredMessageFunction)));
-                await receiver.CompleteAsync(message.SystemProperties.LockToken);
+                await this.logRecord.Store(new LogRecord.Entity(int.Parse(body), nameof(BrokeredMessageFunctionWithExceptions)));
+                await messageReceiver.CompleteAsync(message.SystemProperties.LockToken);
             }
             catch (Exception e)
             {
