@@ -24,7 +24,7 @@ namespace FunctionProcessor
         [FunctionName(nameof(AutocompleteFunction))]
         public async Task AutocompleteFunction(
             [ServiceBusTrigger(
-                "function-queue", 
+                "function-queue-autocomplete", 
                 Connection = "ServiceBusConnection",
                 AutoComplete = true
                 )]
@@ -45,7 +45,7 @@ namespace FunctionProcessor
         [FunctionName(nameof(AutocompleteFunctionWithExceptions))]
         public async Task AutocompleteFunctionWithExceptions(
             [ServiceBusTrigger(
-                "function-queue",
+                "function-queue-autocomplete-with-exception",
                 Connection = "ServiceBusConnection",
                 AutoComplete = true
             )]
@@ -55,7 +55,7 @@ namespace FunctionProcessor
             {
                 string body = myQueueItem;
                 logger.LogInformation($"{body}");
-                if (new Random().Next(0, 10) % 2 == 0)
+                if (new Random().Next(0, 10) % 4 == 0)
                 {
                     throw new Exception("Something happened");
                 }
@@ -71,7 +71,7 @@ namespace FunctionProcessor
         [FunctionName(nameof(BrokeredMessageFunction))]
         public async Task BrokeredMessageFunction(
             [ServiceBusTrigger(
-                "function-queue",
+                "function-queue-no-autocomplete",
                 Connection = "ServiceBusConnection",
                 AutoComplete = false
             )]
@@ -95,7 +95,7 @@ namespace FunctionProcessor
         [FunctionName(nameof(BrokeredMessageFunctionWithExceptions))]
         public async Task BrokeredMessageFunctionWithExceptions(
             [ServiceBusTrigger(
-                "function-queue",
+                "function-queue-no-autocomplete-with-exceptions",
                 Connection = "ServiceBusConnection",
                 AutoComplete = false
             )]
@@ -107,7 +107,7 @@ namespace FunctionProcessor
                 string body = message.Body.ToString();
 
                 logger.LogInformation($"{body}");
-                if (new Random().Next(0, 10) % 2 == 0)
+                if (new Random().Next(0, 10) % 4 == 0)
                 {
                     throw new Exception("Something happened");
                 }
