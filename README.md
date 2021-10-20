@@ -41,7 +41,10 @@ What you need for this is the following:
 - Service Bus namespace with the following queues:
   - console-peeklock
   - console-receiveanddelete
-  - function-queueu
+  - function-queue-autocomplete
+  - function-queue-autocomplete-with-exception
+  - function-queue-no-autocomplete
+  - function-queue-no-autocomplete-with-exceptions
   - console-actor-peeklock
   - console-actor-receiveanddelete
 - Function App
